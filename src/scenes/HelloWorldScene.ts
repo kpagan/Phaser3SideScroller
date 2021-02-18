@@ -1,14 +1,18 @@
 import Phaser from 'phaser'
+import BouncingLogo from './BouncingLogo'
 
-export default class HelloWorldScene extends Phaser.Scene
-{
-	constructor()
-	{
-		super('hello-world')
-	}
+enum ImageNames {
+    Sky = 'sky',
+    Logo = 'logo',
+    RedParticle = 'red_particle'
+}
 
-	preload()
-    {
+export default class HelloWorldScene extends Phaser.Scene {
+    constructor() {
+        super('hello-world')
+    }
+
+    preload() {
         this.load.setBaseURL('http://labs.phaser.io')
 
         this.load.image('sky', 'assets/skies/space3.png')
@@ -16,11 +20,17 @@ export default class HelloWorldScene extends Phaser.Scene
         this.load.image('red', 'assets/particles/red.png')
     }
 
-    create()
-    {
-        this.add.image(400, 300, 'sky')
+    create() {
+        this.add.image(400, 300, ImageNames.Sky)
 
-        const particles = this.add.particles('red')
+        const emitter = this.createEmitter(ImageNames.RedParticle)
+        const logo = new BouncingLogo(this, 400, 100, ImageNames.Logo)
+
+        emitter.startFollow(logo.display)
+    }
+
+    private createEmitter(textureName: string) {
+        const particles = this.add.particles(textureName)
 
         const emitter = particles.createEmitter({
             speed: 100,
@@ -28,12 +38,6 @@ export default class HelloWorldScene extends Phaser.Scene
             blendMode: 'ADD'
         })
 
-        const logo = this.physics.add.image(400, 100, 'logo')
-
-        logo.setVelocity(100, 200)
-        logo.setBounce(1, 1)
-        logo.setCollideWorldBounds(true)
-
-        emitter.startFollow(logo)
+        return emitter
     }
 }
