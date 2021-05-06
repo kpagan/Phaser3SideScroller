@@ -1,0 +1,271 @@
+{
+	"textures": [
+		{
+			"image": "penguin",
+			"format": "RGBA8888",
+			"size": {
+				"w": 216,
+				"h": 256
+			},
+			"scale": 1,
+			"frames": [
+				{
+					"filename": "penguin_jump02",
+					"rotated": false,
+					"trimmed": false,
+					"sourceSize": {
+						"w": 72,
+						"h": 64
+					},
+					"spriteSourceSize": {
+						"x": 0,
+						"y": 0,
+						"w": 72,
+						"h": 64
+					},
+					"frame": {
+						"x": 0,
+						"y": 0,
+						"w": 72,
+						"h": 64
+					}
+				},
+				{
+					"filename": "penguin_die01",
+					"rotated": false,
+					"trimmed": false,
+					"sourceSize": {
+						"w": 72,
+						"h": 64
+					},
+					"spriteSourceSize": {
+						"x": 0,
+						"y": 0,
+						"w": 72,
+						"h": 64
+					},
+					"frame": {
+						"x": 0,
+						"y": 64,
+						"w": 72,
+						"h": 64
+					}
+				},
+				{
+					"filename": "penguin_die03",
+					"rotated": false,
+					"trimmed": false,
+					"sourceSize": {
+						"w": 72,
+						"h": 64
+					},
+					"spriteSourceSize": {
+						"x": 0,
+						"y": 0,
+						"w": 72,
+						"h": 64
+					},
+					"frame": {
+						"x": 72,
+						"y": 0,
+						"w": 72,
+						"h": 64
+					}
+				},
+				{
+					"filename": "penguin_die04",
+					"rotated": false,
+					"trimmed": false,
+					"sourceSize": {
+						"w": 72,
+						"h": 64
+					},
+					"spriteSourceSize": {
+						"x": 0,
+						"y": 0,
+						"w": 72,
+						"h": 64
+					},
+					"frame": {
+						"x": 72,
+						"y": 64,
+						"w": 72,
+						"h": 64
+					}
+				},
+				{
+					"filename": "penguin_hurt",
+					"rotated": false,
+					"trimmed": false,
+					"sourceSize": {
+						"w": 72,
+						"h": 64
+					},
+					"spriteSourceSize": {
+						"x": 0,
+						"y": 0,
+						"w": 72,
+						"h": 64
+					},
+					"frame": {
+						"x": 0,
+						"y": 128,
+						"w": 72,
+						"h": 64
+					}
+				},
+				{
+					"filename": "penguin_jump01",
+					"rotated": false,
+					"trimmed": false,
+					"sourceSize": {
+						"w": 72,
+						"h": 64
+					},
+					"spriteSourceSize": {
+						"x": 0,
+						"y": 0,
+						"w": 72,
+						"h": 64
+					},
+					"frame": {
+						"x": 72,
+						"y": 128,
+						"w": 72,
+						"h": 64
+					}
+				},
+				{
+					"filename": "penguin_die02",
+					"rotated": false,
+					"trimmed": false,
+					"sourceSize": {
+						"w": 72,
+						"h": 64
+					},
+					"spriteSourceSize": {
+						"x": 0,
+						"y": 0,
+						"w": 72,
+						"h": 64
+					},
+					"frame": {
+						"x": 144,
+						"y": 0,
+						"w": 72,
+						"h": 64
+					}
+				},
+				{
+					"filename": "penguin_jump03",
+					"rotated": false,
+					"trimmed": false,
+					"sourceSize": {
+						"w": 72,
+						"h": 64
+					},
+					"spriteSourceSize": {
+						"x": 0,
+						"y": 0,
+						"w": 72,
+						"h": 64
+					},
+					"frame": {
+						"x": 144,
+						"y": 64,
+						"w": 72,
+						"h": 64
+					}
+				},
+				{
+					"filename": "penguin_walk01",
+					"rotated": false,
+					"trimmed": false,
+					"sourceSize": {
+						"w": 72,
+						"h": 64
+					},
+					"spriteSourceSize": {
+						"x": 0,
+						"y": 0,
+						"w": 72,
+						"h": 64
+					},
+					"frame": {
+						"x": 144,
+						"y": 128,
+						"w": 72,
+						"h": 64
+					}
+				},
+				{
+					"filename": "penguin_walk02",
+					"rotated": false,
+					"trimmed": false,
+					"sourceSize": {
+						"w": 72,
+						"h": 64
+					},
+					"spriteSourceSize": {
+						"x": 0,
+						"y": 0,
+						"w": 72,
+						"h": 64
+					},
+					"frame": {
+						"x": 0,
+						"y": 192,
+						"w": 72,
+						"h": 64
+					}
+				},
+				{
+					"filename": "penguin_walk03",
+					"rotated": false,
+					"trimmed": false,
+					"sourceSize": {
+						"w": 72,
+						"h": 64
+					},
+					"spriteSourceSize": {
+						"x": 0,
+						"y": 0,
+						"w": 72,
+						"h": 64
+					},
+					"frame": {
+						"x": 72,
+						"y": 192,
+						"w": 72,
+						"h": 64
+					}
+				},
+				{
+					"filename": "penguin_walk04",
+					"rotated": false,
+					"trimmed": false,
+					"sourceSize": {
+						"w": 72,
+						"h": 64
+					},
+					"spriteSourceSize": {
+						"x": 0,
+						"y": 0,
+						"w": 72,
+						"h": 64
+					},
+					"frame": {
+						"x": 144,
+						"y": 192,
+						"w": 72,
+						"h": 64
+					}
+				}
+			]
+		}
+	],
+	"meta": {
+		"app": "http://free-tex-packer.com",
+		"version": "0.6.7"
+	}
+}
