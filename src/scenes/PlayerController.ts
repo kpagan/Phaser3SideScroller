@@ -1,5 +1,6 @@
 import Phaser, { Physics } from 'phaser'
 import StateMachine from '../statemachine/StateMachine';
+import { sharedInstance as events } from './EventCenter'
 
 type CursorKeys = Phaser.Types.Input.Keyboard.CursorKeys;
 type Sprite = Phaser.Physics.Matter.Sprite;
@@ -17,26 +18,49 @@ export default class PlayerController {
         this.stateMacine = new StateMachine(this, 'player');
 
         this.stateMacine
-        .addState('idle', {
-            onEnter: this.idleOnEnter,
-            onUpdate: this.idleOnUpdate
-        })
-        .addState('walk', {
-            onEnter: this.walkOnEnter,
-            onUpdate: this.walkOnUpdate,
-        })
-        .addState('jump', {
-            onEnter: this.jumpOnEnter,
-            onUpdate: this.jumpOnUpdate,
-        })
-        .setState('idle');
-        
+            .addState('idle', {
+                onEnter: this.idleOnEnter,
+                onUpdate: this.idleOnUpdate
+            })
+            .addState('walk', {
+                onEnter: this.walkOnEnter,
+                onUpdate: this.walkOnUpdate,
+            })
+            .addState('jump', {
+                onEnter: this.jumpOnEnter,
+                onUpdate: this.jumpOnUpdate,
+            })
+            .setState('idle');
+
         this.sprite.setOnCollide((data: MatterJS.ICollisionPair) => {
-            if (this.stateMacine.isCurrentState('jump') {
-                this.stateMacine.setState('idle');
+            console.dir(data);
+            let body = data.bodyB as MatterJS.BodyType;
+            let gameObject = body.gameObject;
+
+            if (!gameObject) {
+                return;
             }
+
+            // if (gameObject instanceof Phaser.Physics.Matter.TileBody) {
+                if (this.stateMacine.isCurrentState('jump')) {
+                    this.stateMacine.setState('idle');
+                }
+                // return;
+            // }
+
+            let sprite = gameObject as Phaser.Physics.Matter.Sprite;
+            let type = sprite.getData('type');
+
+            switch (type) {
+                case 'star': {
+                    events.emit('star-collected');
+                    sprite.destroy();
+                    break;
+                }
+            }
+
         });
-        
+
     }
 
     update(dt: number) {
@@ -60,7 +84,7 @@ export default class PlayerController {
 
     private walkOnUpdate() {
         this.walkOnArrowsKeysPressed();
-        
+
         if (!this.cursors.left.isDown && !this.cursors.right.isDown) {
             this.sprite.setVelocityX(0);
             this.stateMacine.setState('idle');
@@ -77,7 +101,7 @@ export default class PlayerController {
     private jumpOnUpdate() {
         this.walkOnArrowsKeysPressed()
     }
-    
+
     private walkOnArrowsKeysPressed() {
         let speed: number = 5;
         if (this.cursors.left.isDown) {

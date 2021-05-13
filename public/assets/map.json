@@ -28,15 +28,114 @@
          "name":"objects",
          "objects":[
                 {
-                 "height":42.4242424242425,
+                 "height":42.4242,
                  "id":1,
                  "name":"penguin-spawn",
                  "rotation":0,
                  "type":"",
                  "visible":true,
-                 "width":51.5151515151515,
-                 "x":230.30303030303,
-                 "y":715.151515151515
+                 "width":51.5152,
+                 "x":230.303,
+                 "y":715.152
+                }, 
+                {
+                 "height":66.5454545454545,
+                 "id":2,
+                 "name":"star",
+                 "rotation":0,
+                 "type":"",
+                 "visible":true,
+                 "width":69.5454545454546,
+                 "x":769.818181818182,
+                 "y":700.590909090909
+                }, 
+                {
+                 "height":66.5455,
+                 "id":6,
+                 "name":"star",
+                 "rotation":0,
+                 "type":"",
+                 "visible":true,
+                 "width":69.5455,
+                 "x":1189.22725,
+                 "y":490.72725
+                }, 
+                {
+                 "height":66.5455,
+                 "id":7,
+                 "name":"star",
+                 "rotation":0,
+                 "type":"",
+                 "visible":true,
+                 "width":69.5455,
+                 "x":1402.56058333333,
+                 "y":561.393916666667
+                }, 
+                {
+                 "height":66.5455,
+                 "id":8,
+                 "name":"star",
+                 "rotation":0,
+                 "type":"",
+                 "visible":true,
+                 "width":69.5455,
+                 "x":979.893916666667,
+                 "y":142.72725
+                }, 
+                {
+                 "height":66.5455,
+                 "id":9,
+                 "name":"star",
+                 "rotation":0,
+                 "type":"",
+                 "visible":true,
+                 "width":69.5455,
+                 "x":278.560583333333,
+                 "y":70.72725
+                }, 
+                {
+                 "height":66.5455,
+                 "id":10,
+                 "name":"star",
+                 "rotation":0,
+                 "type":"",
+                 "visible":true,
+                 "width":69.5455,
+                 "x":1327.89391666667,
+                 "y":70.7272500000001
+                }, 
+                {
+                 "height":66.5455,
+                 "id":11,
+                 "name":"star",
+                 "rotation":0,
+                 "type":"",
+                 "visible":true,
+                 "width":69.5455,
+                 "x":2449.22725,
+                 "y":281.393916666667
+                }, 
+                {
+                 "height":66.5455,
+                 "id":12,
+                 "name":"star",
+                 "rotation":0,
+                 "type":"",
+                 "visible":true,
+                 "width":69.5455,
+                 "x":2801.22725,
+                 "y":281.393916666667
+                }, 
+                {
+                 "height":66.5455,
+                 "id":13,
+                 "name":"star",
+                 "rotation":0,
+                 "type":"",
+                 "visible":true,
+                 "width":69.5455,
+                 "x":2377.22725,
+                 "y":702.72725
                 }],
          "opacity":1,
          "type":"objectgroup",
@@ -45,7 +144,7 @@
          "y":0
         }],
  "nextlayerid":3,
- "nextobjectid":2,
+ "nextobjectid":14,
  "orientation":"orthogonal",
  "renderorder":"right-down",
  "tiledversion":"1.4.3",
