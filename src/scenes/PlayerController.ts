@@ -1,18 +1,23 @@
 import Phaser, { Physics } from 'phaser'
 import StateMachine from '../statemachine/StateMachine';
 import { sharedInstance as events } from './EventCenter'
+import ObstaclesController from './ObstaclesCotroller';
 
 type CursorKeys = Phaser.Types.Input.Keyboard.CursorKeys;
 type Sprite = Phaser.Physics.Matter.Sprite;
 
 export default class PlayerController {
+    private scene: Phaser.Scene;
     private sprite: Sprite;
     private cursors: CursorKeys;
+    private obstacles: ObstaclesController;
     private stateMacine: StateMachine
 
-    constructor(sprite: Sprite, cursors: CursorKeys) {
+    constructor(scene: Phaser.Scene, sprite: Sprite, cursors: CursorKeys, obstacles: ObstaclesController) {
+        this.scene = scene;
         this.sprite = sprite;
         this.cursors = cursors;
+        this.obstacles = obstacles;
 
         this.createAnimations();
         this.stateMacine = new StateMachine(this, 'player');
@@ -30,11 +35,17 @@ export default class PlayerController {
                 onEnter: this.jumpOnEnter,
                 onUpdate: this.jumpOnUpdate,
             })
+            .addState('spike-hit', {
+                onEnter: this.spikeHitOnEnter
+            })
             .setState('idle');
 
         this.sprite.setOnCollide((data: MatterJS.ICollisionPair) => {
             console.dir(data);
             let body = data.bodyB as MatterJS.BodyType;
+            if (this.obstacles.is('spikes', body)) {
+                this.stateMacine.setState('spike-hit');
+            }
             let gameObject = body.gameObject;
 
             if (!gameObject) {
@@ -118,6 +129,36 @@ export default class PlayerController {
         if (spaceJustPressed) {
             this.stateMacine.setState('jump');
         }
+    }
+
+    private spikeHitOnEnter() {
+        this.sprite.setVelocityY(-6);
+        let startColor = Phaser.Display.Color.ValueToColor(0xffffff);
+        let endColor = Phaser.Display.Color.ValueToColor(0xff0000);
+
+        this.scene.tweens.addCounter({
+            from: 0,
+            to: 100,
+            duration: 100,
+            repeat: 2,
+            yoyo: true,
+            ease: Phaser.Math.Easing.Sine.InOut,
+            onUpdate: tween => {
+                let value = tween.getValue();
+                let colorObject = Phaser.Display.Color.Interpolate.ColorWithColor(
+                    startColor,
+                    endColor,
+                    100,
+                    value
+                );
+
+                let color = Phaser.Display.Color.GetColor(colorObject.r, colorObject.g, colorObject.b);
+
+                this.sprite.setTint(color);
+            }
+
+        });
+        this.stateMacine.setState('idle');
     }
 
     private createAnimations() {
