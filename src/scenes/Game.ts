@@ -23,6 +23,7 @@ export default class Game extends Phaser.Scene {
         this.load.image('tiles', 'assets/sheet.png');
         this.load.tilemapTiledJSON('tilemap', 'assets/map.json');
         this.load.image('star', 'assets/star.png');
+        this.load.image('health', 'assets/health.png');
     }
 
     create() {
@@ -34,10 +35,6 @@ export default class Game extends Phaser.Scene {
         ground.setCollisionByProperty({ collides: true });
 
         map.createLayer('obstacles', tileset);
-
-        this.matter.world.convertTilemapLayer(ground);
-        this.cameras.main.scrollY = 300;
-
         let objectsLayer = map.getObjectLayer('objects');
 
         objectsLayer.objects.forEach(objData => {
@@ -45,7 +42,6 @@ export default class Game extends Phaser.Scene {
             switch (name) {
                 case 'penguin-spawn': {
                     this.penguin = this.matter.add.sprite(x + (width * 0.5), y, 'penguin')
-                        .play('player-idle')
                         .setFixedRotation();
 
                     this.playerController = new PlayerController(this, this.penguin, this.cursors, this.obstacles);
@@ -62,6 +58,15 @@ export default class Game extends Phaser.Scene {
                     star.setData('type', 'star');
                     break;
                 }
+                case 'health': {
+                    let health = this.matter.add.sprite(x, y, 'health', undefined, {
+                        isStatic: true,
+                        isSensor: true
+                    });
+                    health.setData('type', 'health');
+                    health.setData('healthPoints', 10);
+                    break;
+                }
                 case 'spikes': {
                     let spike = this.matter.add.rectangle(x + (width * 0.5), y + (height * 0.5), width, height, {
                         isStatic: true
@@ -69,11 +74,11 @@ export default class Game extends Phaser.Scene {
                     this.obstacles.add('spikes', spike);
                     break;
                 }
-
-
             }
-        })
-
+        });
+        // this line below needs for some reason to be under the creation of objects otherwise 
+        // when jumping will not be able to go back to idle state. WTF??????
+        this.matter.world.convertTilemapLayer(ground);
     }
 
 

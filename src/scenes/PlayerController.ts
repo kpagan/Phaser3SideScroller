@@ -13,6 +13,8 @@ export default class PlayerController {
     private obstacles: ObstaclesController;
     private stateMacine: StateMachine
 
+    private health: number = 100;
+
     constructor(scene: Phaser.Scene, sprite: Sprite, cursors: CursorKeys, obstacles: ObstaclesController) {
         this.scene = scene;
         this.sprite = sprite;
@@ -41,10 +43,10 @@ export default class PlayerController {
             .setState('idle');
 
         this.sprite.setOnCollide((data: MatterJS.ICollisionPair) => {
-            console.dir(data);
             let body = data.bodyB as MatterJS.BodyType;
             if (this.obstacles.is('spikes', body)) {
                 this.stateMacine.setState('spike-hit');
+                return;
             }
             let gameObject = body.gameObject;
 
@@ -52,12 +54,12 @@ export default class PlayerController {
                 return;
             }
 
-            // if (gameObject instanceof Phaser.Physics.Matter.TileBody) {
+            if (gameObject instanceof Phaser.Physics.Matter.TileBody) {
                 if (this.stateMacine.isCurrentState('jump')) {
                     this.stateMacine.setState('idle');
                 }
-                // return;
-            // }
+                return;
+            }
 
             let sprite = gameObject as Phaser.Physics.Matter.Sprite;
             let type = sprite.getData('type');
@@ -65,6 +67,13 @@ export default class PlayerController {
             switch (type) {
                 case 'star': {
                     events.emit('star-collected');
+                    sprite.destroy();
+                    break;
+                }
+                case 'health': {
+                    let value = sprite.getData('healthPoints') ?? 10;
+                    this.health = Phaser.Math.Clamp(this.health + value, 0, 100);
+                    events.emit('health-changed', this.health);
                     sprite.destroy();
                     break;
                 }
@@ -86,6 +95,7 @@ export default class PlayerController {
         if (this.cursors.left.isDown || this.cursors.right.isDown) {
             this.stateMacine.setState('walk');
         }
+
         this.jumpOnSpacePressed();
     }
 
@@ -110,7 +120,7 @@ export default class PlayerController {
     }
 
     private jumpOnUpdate() {
-        this.walkOnArrowsKeysPressed()
+        this.walkOnArrowsKeysPressed();
     }
 
     private walkOnArrowsKeysPressed() {
@@ -132,7 +142,11 @@ export default class PlayerController {
     }
 
     private spikeHitOnEnter() {
-        this.sprite.setVelocityY(-6);
+        this.sprite.setVelocityY(-12);
+        this.health = Phaser.Math.Clamp(this.health - 10, 0, 100);
+
+        events.emit('health-changed', this.health);
+
         let startColor = Phaser.Display.Color.ValueToColor(0xffffff);
         let endColor = Phaser.Display.Color.ValueToColor(0xff0000);
 
