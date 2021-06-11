@@ -15,6 +15,8 @@ export default class PlayerController {
 
     private health: number = 100;
 
+    private lastSnowman?: Sprite;
+
     constructor(scene: Phaser.Scene, sprite: Sprite, cursors: CursorKeys, obstacles: ObstaclesController) {
         this.scene = scene;
         this.sprite = sprite;
@@ -40,6 +42,12 @@ export default class PlayerController {
             .addState('spike-hit', {
                 onEnter: this.spikeHitOnEnter
             })
+            .addState('snowman-hit', {
+                onEnter: this.snowmanHitOnEnter
+            })
+            .addState('snowman-stomp', {
+                onEnter: this.snowmanStompOnEnter
+            })
             .setState('idle');
 
         this.sprite.setOnCollide((data: MatterJS.ICollisionPair) => {
@@ -48,6 +56,17 @@ export default class PlayerController {
                 this.stateMacine.setState('spike-hit');
                 return;
             }
+
+            if (this.obstacles.is('snowman', body)) {
+                this.lastSnowman = body.gameObject;
+                if (this.sprite.y < body.position.y) {
+                    this.stateMacine.setState('snowman-stomp');
+                } else {
+                    this.stateMacine.setState('snowman-hit');
+                }
+                return;
+            }
+
             let gameObject = body.gameObject;
 
             if (!gameObject) {
@@ -143,12 +162,30 @@ export default class PlayerController {
 
     private spikeHitOnEnter() {
         this.sprite.setVelocityY(-12);
+        this.penguinGotHit(0xff0000);
+    }
+
+    private snowmanHitOnEnter() {
+        if (this.lastSnowman) {
+            if (this.sprite.x < this.lastSnowman.x) { 
+                this.sprite.setVelocityX(-20);
+            } else {
+                this.sprite.setVelocityX(20);
+            }
+        } else {
+            this.sprite.setVelocityY(-20);
+        }
+
+        this.penguinGotHit(0x0000ff);
+    }
+
+    private penguinGotHit(tintHexColor: number) {
         this.health = Phaser.Math.Clamp(this.health - 10, 0, 100);
 
         events.emit('health-changed', this.health);
 
         let startColor = Phaser.Display.Color.ValueToColor(0xffffff);
-        let endColor = Phaser.Display.Color.ValueToColor(0xff0000);
+        let endColor = Phaser.Display.Color.ValueToColor(tintHexColor);
 
         this.scene.tweens.addCounter({
             from: 0,
@@ -170,9 +207,17 @@ export default class PlayerController {
 
                 this.sprite.setTint(color);
             }
-
         });
         this.stateMacine.setState('idle');
+    }
+
+    private snowmanStompOnEnter() {
+        this.sprite.setVelocityY(-10);
+
+        events.emit('snowman-stomped', this.lastSnowman);
+
+        this.stateMacine.setState('idle');
+
     }
 
     private createAnimations() {

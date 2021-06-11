@@ -1,6 +1,7 @@
 import Phaser from 'phaser'
 import ObstaclesController from './ObstaclesCotroller';
 import PlayerController from './PlayerController';
+import SnowmanController from './SnowmanController';
 
 export default class Game extends Phaser.Scene {
 
@@ -8,6 +9,7 @@ export default class Game extends Phaser.Scene {
     private penguin?: Phaser.Physics.Matter.Sprite;
     private playerController?: PlayerController;
     private obstacles!: ObstaclesController;
+    private snowmen: SnowmanController[] = [];
 
     constructor() {
         super('game');
@@ -16,6 +18,11 @@ export default class Game extends Phaser.Scene {
     init() {
         this.cursors = this.input.keyboard.createCursorKeys();
         this.obstacles = new ObstaclesController();
+        this.snowmen = [];
+
+        this.events.once(Phaser.Scenes.Events.DESTROY, () => {
+            this.destroy();
+        });
     }
 
     preload() {
@@ -24,6 +31,7 @@ export default class Game extends Phaser.Scene {
         this.load.tilemapTiledJSON('tilemap', 'assets/map.json');
         this.load.image('star', 'assets/star.png');
         this.load.image('health', 'assets/health.png');
+        this.load.atlas('snowman', 'assets/snowman.png', 'assets/snowman.json');
     }
 
     create() {
@@ -47,6 +55,14 @@ export default class Game extends Phaser.Scene {
                     this.playerController = new PlayerController(this, this.penguin, this.cursors, this.obstacles);
 
                     this.cameras.main.startFollow(this.penguin);
+                    break;
+                }
+                case 'snowman': {
+                    let snowman = this.matter.add.sprite(x, y, 'snowman')
+                        .setFixedRotation();
+
+                    this.snowmen.push(new SnowmanController(this, snowman));
+                    this.obstacles.add('snowman', snowman.body as MatterJS.BodyType)
                     break;
                 }
                 case 'star': {
@@ -81,13 +97,12 @@ export default class Game extends Phaser.Scene {
         this.matter.world.convertTilemapLayer(ground);
     }
 
-
+    destroy() {
+        this.snowmen.forEach(snowman => snowman.destroy());
+    }
 
     update(t: number, dt: number) {
-        if (!this.playerController) {
-            return;
-        }
-
-        this.playerController.update(dt);
+        this.playerController?.update(dt);
+        this.snowmen.forEach(snowman => snowman.update(dt));
     }
 }

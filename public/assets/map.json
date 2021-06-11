@@ -156,9 +156,9 @@
                  "rotation":0,
                  "type":"",
                  "visible":true,
-                 "width":208.666666666667,
-                 "x":1190.33333333333,
-                 "y":741.666666666667
+                 "width":208.667,
+                 "x":1190.33,
+                 "y":741.667
                 }, 
                 {
                  "height":33,
@@ -167,20 +167,20 @@
                  "rotation":0,
                  "type":"",
                  "visible":true,
-                 "width":23.3333333333333,
+                 "width":23.3333,
                  "x":933,
                  "y":491
                 }, 
                 {
-                 "height":32.3333333333334,
+                 "height":32.3333,
                  "id":20,
                  "name":"spikes",
                  "rotation":0,
                  "type":"",
                  "visible":true,
-                 "width":20.9999999999999,
-                 "x":1004.66666666667,
-                 "y":490.666666666667
+                 "width":21,
+                 "x":1004.67,
+                 "y":490.667
                 }, 
                 {
                  "height":26,
@@ -189,42 +189,42 @@
                  "rotation":0,
                  "type":"",
                  "visible":true,
-                 "width":276.666666666667,
+                 "width":276.667,
                  "x":1122,
-                 "y":351.333333333333
+                 "y":351.333
                 }, 
                 {
-                 "height":30.6666666666667,
+                 "height":30.6667,
                  "id":22,
                  "name":"spikes",
                  "rotation":0,
                  "type":"",
                  "visible":true,
-                 "width":21.3333333333335,
-                 "x":1704.66666666667,
-                 "y":491.333333333333
+                 "width":21.3333,
+                 "x":1704.67,
+                 "y":491.333
                 }, 
                 {
-                 "height":26.6666666666666,
+                 "height":26.6667,
                  "id":23,
                  "name":"spikes",
                  "rotation":0,
                  "type":"",
                  "visible":true,
                  "width":206,
-                 "x":3081.33333333333,
+                 "x":3081.33,
                  "y":742
                 }, 
                 {
-                 "height":14.6666666666667,
+                 "height":14.6667,
                  "id":24,
                  "name":"spikes",
                  "rotation":0,
                  "type":"",
                  "visible":true,
                  "width":204,
-                 "x":1261.33333333333,
-                 "y":210.666666666667
+                 "x":1261.33,
+                 "y":210.667
                 }, 
                 {
                  "height":68,
@@ -258,6 +258,39 @@
                  "width":70,
                  "x":1190,
                  "y":206
+                }, 
+                {
+                 "height":68.3333,
+                 "id":28,
+                 "name":"snowman",
+                 "rotation":0,
+                 "type":"",
+                 "visible":true,
+                 "width":68,
+                 "x":639.333,
+                 "y":692
+                }, 
+                {
+                 "height":70.3333,
+                 "id":29,
+                 "name":"snowman",
+                 "rotation":0.537713923619735,
+                 "type":"",
+                 "visible":true,
+                 "width":67.3333,
+                 "x":631.331512489439,
+                 "y":279.352595878159
+                }, 
+                {
+                 "height":64,
+                 "id":30,
+                 "name":"snowman",
+                 "rotation":0,
+                 "type":"",
+                 "visible":true,
+                 "width":66.6667,
+                 "x":1682.67,
+                 "y":700
                 }],
          "opacity":1,
          "type":"objectgroup",
@@ -266,10 +299,10 @@
          "y":0
         }],
  "nextlayerid":4,
- "nextobjectid":28,
+ "nextobjectid":31,
  "orientation":"orthogonal",
  "renderorder":"right-down",
- "tiledversion":"1.4.3",
+ "tiledversion":"1.7.0",
  "tileheight":70,
  "tilesets":[
         {
@@ -1170,6 +1203,6 @@
         }],
  "tilewidth":70,
  "type":"map",
- "version":1.4,
+ "version":"1.6",
  "width":50
 }
