@@ -48,6 +48,9 @@ export default class PlayerController {
             .addState('snowman-stomp', {
                 onEnter: this.snowmanStompOnEnter
             })
+            .addState('dead', {
+                onEnter: this.deadOnEnter
+            })
             .setState('idle');
 
         this.sprite.setOnCollide((data: MatterJS.ICollisionPair) => {
@@ -180,10 +183,6 @@ export default class PlayerController {
     }
 
     private penguinGotHit(tintHexColor: number) {
-        this.health = Phaser.Math.Clamp(this.health - 10, 0, 100);
-
-        events.emit('health-changed', this.health);
-
         let startColor = Phaser.Display.Color.ValueToColor(0xffffff);
         let endColor = Phaser.Display.Color.ValueToColor(tintHexColor);
 
@@ -209,6 +208,15 @@ export default class PlayerController {
             }
         });
         this.stateMacine.setState('idle');
+        this.setHealth(this.health - 10);
+    }
+
+    private setHealth(value: number) {
+        this.health = Phaser.Math.Clamp(value, 0, 100);
+        events.emit('health-changed', this.health);
+        if (this.health <= 0) {
+            this.stateMacine.setState('dead');
+        }
     }
 
     private snowmanStompOnEnter() {
@@ -218,6 +226,14 @@ export default class PlayerController {
 
         this.stateMacine.setState('idle');
 
+    }
+
+    private deadOnEnter() {
+        this.sprite.play('player-death');
+        this.sprite.setOnCollide(() => {});
+        this.scene.time.delayedCall(1500, () => {
+            this.scene.scene.start('game-over');
+        });
     }
 
     private createAnimations() {
@@ -247,6 +263,17 @@ export default class PlayerController {
                 prefix: 'penguin_jump0'
             }),
             repeat: -1
+        });
+
+        this.sprite.anims.create({
+            key: 'player-death',
+            frameRate: 10,
+            frames: this.sprite.anims.generateFrameNames('penguin', {
+                start: 1,
+                end: 4,
+                prefix: 'penguin_die',
+                zeroPad: 2
+            })
         });
     }
 }
